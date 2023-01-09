@@ -295,7 +295,8 @@ if (isset($_SESSION["ses_username"]) == "") {
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
                 <h6>Orders table</h6>
-                <button class="btn btn-primary btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#modal-bayar">Bayar</button>
+                <button class="btn btn-secondary btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#modal-lokasi">Lokasi</button>
+                <button class="btn btn-primary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#modal-bayar">Bayar</button>
                 <button class="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#modal-tambah">Order</button>
               </div>
             </div>
@@ -364,26 +365,26 @@ if (isset($_SESSION["ses_username"]) == "") {
 
 
                     if (isset($_POST['belum-bayar'])) {
-                      $pending = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Belum Bayar' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $pending = ("SELECT tb_transaksi.id, tb_transaksi.ulasan,tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Belum Bayar' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result   = mysqli_query($koneksi, $pending);
                     } elseif (isset($_POST['pengerjaan'])) {
-                      $delivery = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Pengerjaan' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $delivery = ("SELECT tb_transaksi.id,tb_transaksi.ulasan,tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Pengerjaan' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result   = mysqli_query($koneksi, $delivery);
                     } elseif (isset($_POST['selesai'])) {
-                      $done = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Selesai' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $done = ("SELECT tb_transaksi.id,tb_transaksi.ulasan,tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Selesai' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result   = mysqli_query($koneksi, $done);
                     } elseif (isset($_POST['gagal'])) {
-                      $cancel = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Gagal' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $cancel = ("SELECT tb_transaksi.id,tb_transaksi.ulasan,tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' AND tb_status.nama = 'Gagal' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result   = mysqli_query($koneksi, $cancel);
                     } elseif (isset($_POST['from_date']) && isset($_POST['to_date'])) {
 
                       $from_date = $_POST['from_date'];
                       $to_date = $_POST['to_date'];
 
-                      $filter_dek = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.tanggal BETWEEN '$from_date' AND '$to_date' AND tb_transaksi.id_user = '$data_id' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $filter_dek = ("SELECT tb_transaksi.id,tb_transaksi.ulasan, tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.tanggal BETWEEN '$from_date' AND '$to_date' AND tb_transaksi.id_user = '$data_id' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result   = mysqli_query($koneksi, $filter_dek);
                     } else {
-                      $query  = ("SELECT tb_transaksi.id, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
+                      $query  = ("SELECT tb_transaksi.id,tb_transaksi.ulasan, tb_transaksi.foto_ulasan, tb_user.nama, tb_status.nama AS status, tb_layanan.nama as layanan, tb_layanan.harga as hargalayanan, tb_layanan.id as idlayanan, tb_penjemputan.nama as penjemputan, tb_penjemputan.id as idpenjemputan, tb_penjemputan.harga as hargapenjemputan, tb_pengiriman.id as idpengiriman, tb_pengiriman.nama as pengiriman, tb_pengiriman.harga as hargapengiriman, tb_pembayaran.id as idpembayaran, tb_transaksi.jumlah as jumlah, FORMAT(SUM(tb_transaksi.jumlah * tb_layanan.harga + tb_pengiriman.harga + tb_penjemputan.harga),0) AS total, tb_pembayaran.nama as pembayaran, tb_transaksi.alamat, tb_transaksi.bukti as bukti, tb_transaksi.tanggal FROM tb_transaksi INNER JOIN tb_status ON tb_status.id=tb_transaksi.status INNER JOIN tb_penjemputan ON tb_penjemputan.id=tb_transaksi.penjemputan INNER JOIN tb_pengiriman ON tb_pengiriman.id=tb_transaksi.pengiriman INNER JOIN tb_layanan ON tb_layanan.id=tb_transaksi.layanan INNER JOIN tb_pembayaran ON tb_pembayaran.id=tb_transaksi.pembayaran INNER JOIN tb_user ON tb_user.id=tb_transaksi.id_user WHERE tb_transaksi.id_user = '$data_id' GROUP BY tb_transaksi.id LIMIT $posisi, $batas");
                       $result = mysqli_query($koneksi, $query);
                     }
 
@@ -410,6 +411,8 @@ if (isset($_SESSION["ses_username"]) == "") {
                       $transaksiIdPembayaran = $row['idpembayaran'];
 
                       $transaksiJumlah = $row['jumlah'];
+                      $transaksiUlasan = $row['ulasan'];
+                      $transaksiFotoUlasan = $row['foto_ulasan'];
 
 
                       $transaksiId = $row['id'];
@@ -539,6 +542,7 @@ if (isset($_SESSION["ses_username"]) == "") {
 
                             <button disabled class='btn btn-warning btn-sm px-3 py-1 me-1 mt-3' data-bs-toggle='modal' data-bs-target='#modal-edit$row[id]'>Edit</button>
                             <button disabled class='btn btn-danger btn-sm px-3 py-1 me-1 mt-3' data-bs-toggle='modal' data-bs-target='#modal-delete$row[id]'>Delete</button>
+                            <button class='btn btn-warning btn-sm px-3 py-1 me-1 mt-3' data-bs-toggle='modal' data-bs-target='#modal-ulasan$row[id]'>Ulasan</button>
                             
                             ";
                           } elseif ($transaksiStatus == "Gagal") {
@@ -568,6 +572,49 @@ if (isset($_SESSION["ses_username"]) == "") {
 
                       <tr></tr>
                       </tr>
+
+                      <!-- Modal Detail Ulasan -->
+
+                      <div class="modal fade" id="modal-ulasan<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Detail Ulasan</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <form action="orders.php?id=<?= $row['id'] ?>" method="post" enctype="multipart/form-data">
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label class="custom-file-label" for="customFileLang">Upload Foto</label>
+                                  <input type="file" class="form-control" name="fotoulasan" id="foto">
+
+                                </div>
+                                <div class="form-group align-middle text-center">
+                                  <img src="../foto/ulasan/<?php echo $transaksiFotoUlasan ?>" alt="ulasan ngab" class="w-80 border-radius-lg shadow-sm" />
+                                </div>
+
+                                <div class="form-group">
+                                  <label for="exampleFormControlTextarea1">Ulasan</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" name="isiulasan" maxlength="500" rows="5"><?= $transaksiUlasan ?></textarea>
+                                </div>
+
+                                <div class="modal-footer">
+                                  <div class="align-middle text-center">
+                                    <button class="btn btn-success btn-sm ms-auto" type="submit" name="submit-ulasan">Save</button>
+                                    <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <!-- End Detail Ulasan -->
 
                       <!-- Modal Detail Delete -->
                       <div class="modal fade" id="modal-delete<?= $row['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -713,7 +760,11 @@ if (isset($_SESSION["ses_username"]) == "") {
 
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
+                              <div class="align-middle text-center">
+                                <a class="btn btn-warning btn-sm ms-auto" href="cetak_struk_user.php?id=<?= $row['id'] ?>">Struk</a>
+
+                                <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
+                              </div>
                               <!-- <button type="button" class="btn bg-gradient-primary">Save changes</button> -->
                             </div>
                           </div>
@@ -757,11 +808,6 @@ if (isset($_SESSION["ses_username"]) == "") {
                                   <?php
 
                                   if ($transaksiBukti == "") {
-                                    // echo "<script>
-                                    //   Swal.fire({title: 'Data Gagal Disimpan',text: '',icon: 'error',confirmButtonText: 'OK'
-                                    //   }).then((result) => {if (result.value)
-                                    //       {window.location = 'orders.php';}
-                                    //   })</script>";
                                   } else {
                                     echo "
                                 
@@ -796,33 +842,7 @@ if (isset($_SESSION["ses_username"]) == "") {
                       <!-- End Detail Bukti -->
 
 
-                      <!-- Modal Detail Bayar -->
-                      <div class="modal fade" id="modal-bayar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Detail Bayar</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
 
-                            <div class="form-group align-middle text-center">
-                              <img src="../foto/bukti/dana/p.jpg" alt="bukti ngab" class="w-80 border-radius-lg shadow-sm" />
-                            </div>
-
-
-                            <div class="modal-footer">
-                              <div class="align-middle text-center">
-
-                                <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
-                              </div>
-                              <!-- <button type="button" class="btn bg-gradient-primary">Save changes</button> -->
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
 
 
 
@@ -1157,6 +1177,74 @@ if (isset($_SESSION["ses_username"]) == "") {
 
       <!-- End Transaksi -->
 
+      <!-- Modal Detail Bayar -->
+      <div class="modal fade" id="modal-bayar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detail Bayar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="form-group align-middle text-center">
+              <img src="../foto/bukti/dana/p.jpg" alt="bukti ngab" class="w-80 border-radius-lg shadow-sm" />
+            </div>
+
+
+            <div class="modal-footer">
+              <div class="align-middle text-center">
+
+                <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
+              </div>
+              <!-- <button type="button" class="btn bg-gradient-primary">Save changes</button> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- End Detail Bayar -->
+
+      <!-- Modal Detail Lokasi -->
+      <div class="modal fade" id="modal-lokasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Detail Lokasi</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="form-group align-middle text-center">
+              <!-- <img src="../foto/bukti/dana/p.jpg" alt="bukti ngab" class="w-80 border-radius-lg shadow-sm" /> -->
+              <iframe src="https://www.google.com/maps/embed?pb=!4v1672684972260!6m8!1m7!1s9vWNs6TLoad4id-QzVe29A!2m2!1d-8.153017111943972!2d113.7241640552772!3f159.84749126891484!4f-11.70856957946171!5f0.7820865974627469" width="450" height="560" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="form-group align-middle text-center">
+              <a class='btn btn-warning btn-sm ms-auto' target="_blank" href="https://goo.gl/maps/PmgYohiHwDJszNvSA">Cek</a>
+
+            </div>
+
+
+            <div class="modal-footer">
+              <div class="align-middle text-center">
+
+                <button type="button" class="btn btn-danger btn-sm ms-auto" data-bs-dismiss="modal">Close</button>
+              </div>
+              <!-- <button type="button" class="btn bg-gradient-primary">Save changes</button> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- End Detail Lokasi -->
+
 
       <footer class="footer pt-3">
         <div class="container-fluid">
@@ -1345,11 +1433,68 @@ if (isset($_POST['add-bukti'])) {
 
   $fotongab = $row['bukti'];
 
-  if (file_exists("../foto/bukti/$fotongab")) {
-    unlink("../foto/bukti/$fotongab");
+  if ($foto == "") {
+  } else {
+
+    if (file_exists("../foto/bukti/$fotongab")) {
+      unlink("../foto/bukti/$fotongab");
+    }
+
+    $sql = mysqli_query($koneksi, "UPDATE `tb_transaksi` SET bukti = '$foto' WHERE id='$idfoto'");
   }
 
-  $sql = mysqli_query($koneksi, "UPDATE `tb_transaksi` SET bukti = '$foto' WHERE id='$idfoto'");
+  if ($sql) {
+
+    echo "<script>
+    Swal.fire({title: 'Data Berhasil Diubah',text: '',icon: 'success',confirmButtonText: 'OK'
+    }).then((result) => {if (result.value)
+        {window.location = 'orders.php';}
+    })</script>";
+  } else {
+    echo "<script>
+    Swal.fire({title: 'Data Gagal Disimpan',text: '',icon: 'error',confirmButtonText: 'OK'
+    }).then((result) => {if (result.value)
+        {window.location = 'orders.php';}
+    })</script>";
+  }
+}
+
+
+
+
+?>
+
+<?php
+
+include "../connection/koneksi.php";
+error_reporting(0);
+$idfotoulasan = $_GET['id'];
+$isiulasancuy = $_POST['isiulasan'];
+$fotoulasan = $_FILES['fotoulasan']['name'];
+$file_tmp = $_FILES['fotoulasan']['tmp_name'];
+move_uploaded_file($file_tmp, '../foto/ulasan/' . $fotoulasan);
+
+
+if (isset($_POST['submit-ulasan'])) {
+
+  $hapuscuy = "select * from tb_transaksi where id='$idfotoulasan'";
+  $result = mysqli_query($koneksi, $hapuscuy);
+  $row = mysqli_fetch_array($result, MYSQLI_BOTH);
+
+  $fotoneyo = $row['foto_ulasan'];
+
+  if ($fotoulasan == "") {
+
+    $sql = mysqli_query($koneksi, "UPDATE `tb_transaksi` SET ulasan = '$isiulasancuy'  WHERE id='$idfotoulasan'");
+  } else {
+
+    if (file_exists("../foto/ulasan/$fotoneyo")) {
+      unlink("../foto/ulasan/$fotoneyo");
+    }
+
+    $sql = mysqli_query($koneksi, "UPDATE `tb_transaksi` SET foto_ulasan = '$fotoulasan', ulasan = '$isiulasancuy'  WHERE id='$idfotoulasan'");
+  }
+
 
   if ($sql) {
 
@@ -1375,6 +1520,10 @@ if (isset($_POST['add-bukti'])) {
 
 
 <?php
+
+
+
+
 
 $iddelbukti = $_GET['id'];
 
